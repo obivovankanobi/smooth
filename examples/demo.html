@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="demo.css" type="text/css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.js"></script>
+        <script type="text/javascript" src="../smooth.js"></script>
+        <script type="text/javascript" src="demo.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="subject">
+                Test box
+            </div>
+            <div class="controls">
+                <button onclick="reset();">Reset</button>
+                <button onclick="skewAndFade();">Skew & fade</button>
+                <button onclick="skewThenFade();">Skew, then fade</button>
+            </div>
+            <div class="controls">
+                <p>Mode: <span id="mode"></span></p>
+                <button onclick="setMode('jquery');">Use jQuery</button>
+                <button onclick="setMode('css');">Use CSS</button>
+            </div>
+        </div>
+    </body>
+</html>

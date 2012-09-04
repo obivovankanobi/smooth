@@ -1,11 +1,16 @@
 (function( $ ) {
-    var Smooth = $.fn.smooth = function(styleMap, settingsArgument) {
+    var Smooth = $.fn.smooth = function(styleMapArgument, settingsArgument) {
         var self = this
+            , styleMap = {}
             , promise = $.Deferred()
             , settings = $.extend(true, {}, {
                 duration: 500,
                 easing: "linear"
             }, settingsArgument);
+
+        for (var i in styleMapArgument) {
+            styleMap[i] = styleMapArgument[i];
+        }
 
         if (Smooth.settings.mode == Smooth.MODE_JQUERY) {
             $.extend(true, settings, {
@@ -13,7 +18,17 @@
                     promise.resolve();
                 }
             });
-            $.fn.animate.apply(this, [styleMap, settings]);
+
+            if (styleMap.transform) {
+                var transformMap = {};
+                for (var i=0; i < Smooth.TRANSITION_PREFIXES.length; i++) {
+                    var prefix = Smooth.TRANSITION_PREFIXES[i];
+                    transformMap[prefix + "transform"] = styleMap.transform;
+                }
+                this.css(transformMap);
+            }
+
+            this.animate(styleMap, settings);
         } else {
             //fixing easing CSS3-jQuery difference
             if ("swing" == settings.easing) {
@@ -30,6 +45,13 @@
                 property += i;
             }
 
+            if (styleMap.transform) {
+                for (var i=0; i < Smooth.TRANSITION_PREFIXES.length; i++) {
+                    var prefix = Smooth.TRANSITION_PREFIXES[i];
+                    styleMap[prefix + "transform"] = styleMap.transform;
+                }
+            }
+
             //todo: cut prefixes depend on browser
             for (var i=0; i < Smooth.TRANSITION_PREFIXES.length; i++) {
                 var prefix = Smooth.TRANSITION_PREFIXES[i];
@@ -44,9 +66,6 @@
             setTimeout(function() {
                 promise.resolve();
             }, settings.duration);
-
-            //todo: clear styles
-            //todo: release  complete function
         }
 
         promise.done(function() {
@@ -61,7 +80,7 @@
         MODE_JQUERY: "jquery",
         MODE_CSS: "css",
 
-        TRANSITION_PREFIXES: ["", "-o-", "-moz-", "-webkit-"],
+        TRANSITION_PREFIXES: ["", "-o-", "-moz-", "-webkit-", "-ms-"],
         settings:{
             mode: "css"
         },
