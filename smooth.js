@@ -1,3 +1,11 @@
+/**
+ * Smooth.js v0.1 
+ * small js library for CSS3 transitions with fallback to $.animate in case of IE
+ * http://github.com/alevkon/smooth/
+ *
+ * Copyright 2011, Alexey Konyshev alevkon@gmail.com
+ * MIT license
+ */
 (function( $ ) {
     var Smooth = $.fn.smooth = function(styleMapArgument, settingsArgument) {
         var self = this
