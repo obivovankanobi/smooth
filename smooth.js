@@ -64,7 +64,7 @@
             for (var i=0; i < Smooth.TRANSITION_PREFIXES.length; i++) {
                 var prefix = Smooth.TRANSITION_PREFIXES[i];
                 transitionMap[prefix + "transition-property"] = property;
-                transitionMap[prefix + "transition-duration"] = (settings.duration / 1000) + " s";
+                transitionMap[prefix + "transition-duration"] = (settings.duration / 1000) + "s";
                 transitionMap[prefix + "transition-timing-function"] = settings.easing;
             }
 
@@ -99,7 +99,7 @@
 
         init: function() {
             this.configure({
-                mode: ($.browser.ie) ? this.MODE_JQUERY : this.MODE_CSS
+                mode: /IE/.test(navigator.userAgent) ? this.MODE_JQUERY : this.MODE_CSS
             });
         }
     });
